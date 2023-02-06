@@ -3,6 +3,8 @@ package com.lucas.shopme.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.UUID;
 
 @Builder
@@ -13,7 +15,9 @@ import java.util.UUID;
 @ToString
 @Entity
 @Table(name = "user", schema = "shopme")
-public class User {
+public class User implements Serializable {
+	@Serial
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.UUID)
 	private UUID id;
