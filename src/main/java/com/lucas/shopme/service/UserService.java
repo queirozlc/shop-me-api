@@ -11,13 +11,13 @@ public interface UserService {
 
 	List<User> findAll();
 
-	Page<User> findAllPageable();
+	Page<User> findAllPageable(int page);
 
 	User findById(UUID id);
 
 	User save(UserRequestBody userRequestBody);
 
-	User update(UUID id, UserRequestBody userRequestBody);
+	User update(UserRequestBody userRequestBody, UUID id);
 
 	void delete(UUID id);
 }
