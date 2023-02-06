@@ -57,7 +57,7 @@ public class UserServiceImpl implements UserService {
 		User userToBeSaved = mapper.toUser(userRequestBody);
 
 		if (repository.existsByEmail(userToBeSaved.getEmail())) {
-			throw new BadRequestException("Já existe um usuário com esse email.");
+			throw new BadRequestException("Já existe um usuário cadastrado com esse email.");
 		}
 		userToBeSaved.setEnabled(true);
 		return repository.save(userToBeSaved);
@@ -71,7 +71,7 @@ public class UserServiceImpl implements UserService {
 
 		if (!userToBeUpdated.getEmail().equals(userRequest.getEmail())
 				&& repository.existsByEmail(userRequest.getEmail())) {
-			throw new BadRequestException("Já existe um usuário com esse email.");
+			throw new BadRequestException("Já existe um usuário cadastrado com esse email.");
 		}
 		userRequest.setId(userToBeUpdated.getId());
 		return repository.save(userRequest);
