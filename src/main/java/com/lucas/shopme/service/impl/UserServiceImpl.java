@@ -60,7 +60,7 @@ public class UserServiceImpl implements UserService {
 		if (repository.existsByEmail(userToBeSaved.getEmail())) {
 			throw new BadRequestException("Já existe um usuário com esse email.");
 		}
-
+		userToBeSaved.setEnabled(true);
 		return repository.save(userToBeSaved);
 	}
 
