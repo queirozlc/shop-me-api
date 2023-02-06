@@ -3,11 +3,10 @@ package com.lucas.shopme.service.impl;
 import com.lucas.shopme.entity.User;
 import com.lucas.shopme.exception.bad_request.BadRequestException;
 import com.lucas.shopme.exception.not_found.NotFoundException;
-import com.lucas.shopme.mapper.UserMapper;
+import com.lucas.shopme.mapper.user.UserMapper;
 import com.lucas.shopme.repository.UserRepository;
 import com.lucas.shopme.request.user.UserRequestBody;
 import com.lucas.shopme.service.UserService;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -54,7 +53,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User save(@Valid UserRequestBody userRequestBody) {
+	public User save(UserRequestBody userRequestBody) {
 		User userToBeSaved = mapper.toUser(userRequestBody);
 
 		if (repository.existsByEmail(userToBeSaved.getEmail())) {
@@ -65,7 +64,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User update(@Valid UserRequestBody userRequestBody, UUID id) {
+	public User update(UserRequestBody userRequestBody, UUID id) {
 		User userToBeUpdated = repository.findById(id)
 				.orElseThrow(() -> new BadRequestException(USER_NOT_FOUND));
 		User userRequest = mapper.toUser(userRequestBody);
