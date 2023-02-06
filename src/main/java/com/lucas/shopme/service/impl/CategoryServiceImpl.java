@@ -16,7 +16,7 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 public class CategoryServiceImpl implements CategoryService {
-	public static final String CATEGORY_NOT_FOUND = "Categoria não encontrada.";
+	private static final String CATEGORY_NOT_FOUND = "Categoria não encontrada.";
 	private final CategoryRepository categoryRepository;
 	private final CategoryMapper mapper;
 
@@ -24,15 +24,19 @@ public class CategoryServiceImpl implements CategoryService {
 	public Category createCategory(CategoryRequestBody categoryRequestBody) {
 		Category categoryToBeSaved = mapper.toCategory(categoryRequestBody);
 
-		if (categoryToBeSaved.getParent() != null && categoryToBeSaved.getParent().getId() != null) {
+		if (categoryToBeSaved.getParent().getId() != null) {
 			Category parent = categoryRepository.findById(categoryToBeSaved.getParent().getId())
 					.orElseThrow(() -> new BadRequestException(CATEGORY_NOT_FOUND));
 			categoryToBeSaved.setParent(parent);
+
+		} else {
+			categoryToBeSaved.setParent(null);
 		}
 
-		if (categoryRepository.existsByAliasOrNameAllIgnoreCase(categoryToBeSaved.getAlias(), categoryToBeSaved.getName())) {
+		if (categoryRepository.existsByNameOrAlias(categoryToBeSaved.getAlias(), categoryToBeSaved.getName())) {
 			throw new BadRequestException("Categoria já cadastrada.");
 		}
+
 		categoryToBeSaved.setEnabled(true);
 		return categoryRepository.save(categoryToBeSaved);
 	}
@@ -44,21 +48,26 @@ public class CategoryServiceImpl implements CategoryService {
 				.findById(id)
 				.orElseThrow(() -> new BadRequestException(CATEGORY_NOT_FOUND));
 
-		if (categoryRequest.getParent() != null && categoryRequest.getParent().getId() != null) {
+		if (categoryRequest.getParent().getId() != null) {
 			Category parent = categoryRepository.findById(categoryRequest.getParent().getId())
 					.orElseThrow(() -> new BadRequestException(CATEGORY_NOT_FOUND));
 			categoryRequest.setParent(parent);
+
+		} else {
+			categoryRequest.setParent(categoryToBeUpdated.getParent());
 		}
 
-		if (!categoryRequest.getName().equalsIgnoreCase(categoryToBeUpdated.getName()) ||
-				!categoryRequest.getAlias().equalsIgnoreCase(categoryToBeUpdated.getAlias()) &&
-						categoryRepository.existsByAliasOrNameAllIgnoreCase(categoryRequest.getAlias(), categoryRequest.getName())) {
-			throw new BadRequestException("Categoria já cadastrada com esse alias ou nome.");
+		if ((!categoryRequest.getName().equals(categoryToBeUpdated.getName())
+				|| !categoryRequest.getAlias().equals(categoryToBeUpdated.getAlias()))
+				&& categoryRepository.existsByNameOrAlias(categoryRequest.getName(),
+				categoryRequest.getAlias())) {
+			throw new BadRequestException("Categoria já cadastrada.");
 		}
 
 		categoryRequest.setId(categoryToBeUpdated.getId());
 		return categoryRepository.save(categoryRequest);
 	}
+
 
 	@Override
 	public List<Category> listAllCategories() {
@@ -75,4 +84,5 @@ public class CategoryServiceImpl implements CategoryService {
 				.orElseThrow(() -> new BadRequestException(CATEGORY_NOT_FOUND));
 		categoryRepository.delete(category);
 	}
+
 }
