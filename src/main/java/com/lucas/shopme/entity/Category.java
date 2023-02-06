@@ -30,7 +30,7 @@ public class Category implements Serializable {
 	private boolean enabled;
 
 	@ToString.Exclude
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "parent_id")
 	private Category parent;
 	@ToString.Exclude
