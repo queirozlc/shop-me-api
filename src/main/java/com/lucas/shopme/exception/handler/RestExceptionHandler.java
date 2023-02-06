@@ -2,6 +2,8 @@ package com.lucas.shopme.exception.handler;
 
 import com.lucas.shopme.exception.bad_request.BadRequestException;
 import com.lucas.shopme.exception.bad_request.BadRequestExceptionDetails;
+import com.lucas.shopme.exception.not_found.NotFoundException;
+import com.lucas.shopme.exception.not_found.NotFoundExceptionDetails;
 import com.lucas.shopme.exception.validation.ValidationExceptionDetails;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -32,6 +34,19 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 				.message(ex.getMessage())
 				.build();
 		return new ResponseEntity<>(badRequestExceptionDetails, HttpStatus.BAD_REQUEST);
+	}
+
+	@ExceptionHandler(NotFoundException.class)
+	public ResponseEntity<NotFoundExceptionDetails> handleNotFoundException(NotFoundException ex) {
+		NotFoundExceptionDetails notFoundExceptionDetails = NotFoundExceptionDetails
+				.builder()
+				.title("Not Found. Check api documentation.")
+				.status(HttpStatus.NOT_FOUND.value())
+				.detail(ex.getClass().getName())
+				.timestamp(LocalDateTime.now())
+				.message(ex.getMessage())
+				.build();
+		return new ResponseEntity<>(notFoundExceptionDetails, HttpStatus.NOT_FOUND);
 	}
 
 	@Override
