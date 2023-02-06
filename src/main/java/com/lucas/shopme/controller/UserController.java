@@ -1,7 +1,7 @@
 package com.lucas.shopme.controller;
 
 import com.lucas.shopme.entity.User;
-import com.lucas.shopme.request.UserRequestBody;
+import com.lucas.shopme.request.user.UserRequestBody;
 import com.lucas.shopme.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

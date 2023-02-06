@@ -1,8 +1,10 @@
 package com.lucas.shopme.mapper;
 
 import com.lucas.shopme.entity.User;
-import com.lucas.shopme.request.UserRequestBody;
-import org.mapstruct.*;
+import com.lucas.shopme.request.user.UserRequestBody;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.ReportingPolicy;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = "spring")
 public interface UserMapper {

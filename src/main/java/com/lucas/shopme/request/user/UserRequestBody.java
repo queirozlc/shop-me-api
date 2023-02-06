@@ -1,4 +1,4 @@
-package com.lucas.shopme.request;
+package com.lucas.shopme.request.user;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

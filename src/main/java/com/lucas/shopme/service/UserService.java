@@ -1,7 +1,7 @@
 package com.lucas.shopme.service;
 
 import com.lucas.shopme.entity.User;
-import com.lucas.shopme.request.UserRequestBody;
+import com.lucas.shopme.request.user.UserRequestBody;
 import org.springframework.data.domain.Page;
 
 import java.util.List;

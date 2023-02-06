@@ -5,7 +5,7 @@ import com.lucas.shopme.exception.bad_request.BadRequestException;
 import com.lucas.shopme.exception.not_found.NotFoundException;
 import com.lucas.shopme.mapper.UserMapper;
 import com.lucas.shopme.repository.UserRepository;
-import com.lucas.shopme.request.UserRequestBody;
+import com.lucas.shopme.request.user.UserRequestBody;
 import com.lucas.shopme.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
