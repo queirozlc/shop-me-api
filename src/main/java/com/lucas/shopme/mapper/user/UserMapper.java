@@ -1,4 +1,4 @@
-package com.lucas.shopme.mapper;
+package com.lucas.shopme.mapper.user;
 
 import com.lucas.shopme.entity.User;
 import com.lucas.shopme.request.user.UserRequestBody;
