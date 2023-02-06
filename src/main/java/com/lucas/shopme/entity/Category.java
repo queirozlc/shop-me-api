@@ -1,5 +1,6 @@
 package com.lucas.shopme.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -33,6 +34,7 @@ public class Category implements Serializable {
 	@JoinColumn(name = "parent_id")
 	private Category parent;
 	@ToString.Exclude
+	@JsonIgnore
 	@OneToMany(mappedBy = "parent")
 	private List<Category> children;
 }
